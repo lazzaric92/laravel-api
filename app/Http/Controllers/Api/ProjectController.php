@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -27,6 +28,18 @@ class ProjectController extends Controller
         return response()->json([
             "success" => "true",
             "results" => $project
+        ]);
+    }
+
+    public function searchByUser(Request $request){
+        $data = $request->all();
+        $userId = User::where("name", "LIKE", $data["name"] . "%")->pluck('id');
+        // dd($userId);
+        $projectsByUser = Project::with('user', 'type', 'technologies')->where("user_id", $userId)->get();
+
+        return response()->json([
+            "success" => "true",
+            "results" => $projectsByUser
         ]);
     }
 }
