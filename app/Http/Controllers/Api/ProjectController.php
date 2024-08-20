@@ -35,7 +35,7 @@ class ProjectController extends Controller
         $data = $request->all();
         $userId = User::where("name", "LIKE", $data["name"] . "%")->pluck('id');
         // dd($userId);
-        $projectsByUser = Project::with('user', 'type', 'technologies')->where("user_id", $userId)->get();
+        $projectsByUser = Project::with('user', 'type', 'technologies')->where("user_id", $userId)->orderBy('date', 'desc')->get();
 
         return response()->json([
             "success" => "true",
