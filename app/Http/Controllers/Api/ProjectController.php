@@ -12,7 +12,7 @@ class ProjectController extends Controller
     public function index(){
         // ! return a JSON as the API response
         // $projects = Project::with('user', 'type', 'technologies')->orderBy('date', 'desc')->all(); // # eager loading
-        $projects = Project::with('user', 'type', 'technologies')->orderBy('date', 'desc')->paginate(10); // <-- lazy loading
+        $projects = Project::with('user', 'type', 'technologies')->orderBy('date', 'desc')->paginate(20); // <-- lazy loading
 
         return response()->json([
             "success" => "true",
